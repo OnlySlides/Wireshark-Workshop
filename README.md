@@ -21,8 +21,7 @@ Basic query skills were learned to find flags in WS while working through the SO
 ### Parts
 This workshop is split into five videos which will be broken down into 4 sections below for easier reading and organization (part 2, part 3, part 4, part 5). Part 1 is ommitted as it contains an introduction and prequisites for the workshop.
 
-#### Part 2 (WS prefences set-up)
-Part 2 includes: 
+#### Part 2 (WS prefences set-up) includes: 
 - Adding custom view in a new configuration profile
 - Web traffic & default WS display
 - Create a few different search filter expressions
@@ -86,9 +85,68 @@ Results - cleaner time display: <br/>
 Adding additional custom columns to display domains associated with HTTP and HTTPS traffic when reviewing web traffic. Similar steps to earlier to add/remove display columns. <br />
 Column preferences > Add a new column > rename to Host or Domain > Type = Custom > Fields = _http.host or tls.handshake.extensions_server_name_ > move column above Info > Apply > OK. 
 <p align="center">
-: <br/>
-<img src="" height="30%" width="30%" alt="Wireshark Workshop"/>
+Add Custom column: <br/>
+<img src="https://i.imgur.com/l3VLakt.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
-: <br/>
-<img src="" height="40%" width="40%" alt="Wireshark Workshop"/>
+Now see Host/Domain/URL info: <br/>
+<img src="https://i.imgur.com/G3E0UTC.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+<br />
+
+Add and save some commonly used search filter expressions as display filter buttons so there is no need to manually input the filter each time. To the right of the filter query bar > + to Add a display filter button > input name for the filter > input the specific filter query > OK. <br />
+Add and save three filters: 
+- Basic web filter: _(http.request or tls.handshake.type eq 1) and !(ssdp)_ is a basic search filter for web traffic that reveals HTTP URLs & HTTPS domain names, and hides SSDP traffic that is not necessary when reviewing web traffic.
+- Basic+ web filter: _(http.request or tls.handshake.type eq 1 or tcp.flags eq 0x0002) and !(ssdp)_ is the basic filter and looks for TCP segments that have SYN flags because we are looking for the start or attempted start of any TCP connections.
+- Basic+ web + DNS filter: _(http.request or tls.handshake.type eq 1 or tcp.flags eq 0x0002 or dns) and !(ssdp)_ is the basic+ web filter and also looks at DNS queries and responses.
+<p align="center">
+Add display filter: <br/>
+<img src="https://i.imgur.com/apnC2Ut.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Add basic web filter: <br/>
+<img src="https://i.imgur.com/8wZXEXg.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Add basic+ web filter: <br/>
+<img src="https://i.imgur.com/BMLgDTG.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Add basic+ web + DNS filter: <br/>
+<img src="https://i.imgur.com/gi8FL36.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Results: <br/>
+<img src="https://i.imgur.com/fIjiuSB.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+<br />
+
+Export the updated configuration file so it can be imported into WS on a different machine if needed! Edit in the top toolbar > Configuration Profiles > Export > Rename > Save
+<p align="center">
+Export configuration profile: <br/>
+<img src="https://i.imgur.com/8V0IrB6.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Rename configuration profile & save: <br/>
+<img src="https://i.imgur.com/nT0k0D4.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+<br />
+  
+#### Part 3 (Host Identification) includes locating & finding: 
+- Host information
+- Operating System (OS) and web browser
+- Windows User Account Name in Kerberos traffic from an Active Directory environment
+- Other options for Windows host name
+
+Host information: open pcap file provided on WS > click on basic web filter > first three byftes of a MAC address represents the vendor ID of the machine _but_ not always as MAC address can be changed using various methods. 
+<p align="center">
+Apple vendor ID example: <br/>
+<img src="https://i.imgur.com/mateVg7.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+<br />
+
+DHCP is how a host network hardware gets an IP address so if filtering by DHCP, we see an initial source IP address of 0.0.0.0 when it sends a DHCP request asking to be assigned an IP address. The DHCP server's IP address in the image below is 10.5.3.1 and issues the IP address of 10.5.3.177 with an ACK (acknowledge) message.
+<p align="center">
+DHCP Request & ACK: <br/>
+<img src="https://i.imgur.com/5Hnd4Ic.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+
+Expanding on request frame details under DHCP > we can see the requested IP address > also see the host name indicating traffic is from Apple hardware. 
+<p align="center">
+Frame details: <br/>
+<img src="https://i.imgur.com/TxfjyhH.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
