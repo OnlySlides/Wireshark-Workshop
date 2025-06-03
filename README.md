@@ -150,3 +150,72 @@ Expanding on request frame details under DHCP > we can see the requested IP addr
 Frame details: <br/>
 <img src="https://i.imgur.com/TxfjyhH.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
+
+Another option is filtering by NetBIOS name server (nbns) which can be used to dientify host names for Windows hosts & macOS hosts.
+<p align="center">
+Filter by nbns: <br/>
+<img src="https://i.imgur.com/3RyYPZQ.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+<br />
+
+In the following examples below, we look for OS & Web browser information in unencrypted HTTP request headers. After opening provided pcap example > click on basic web filter > follow TCP stream for first HTTP request to whichever domain/URL by right clicking > Follow > TCP stream > look for user-agent line in the HTTP GET request headers. Unsure what version the browser or OS is? Look it up! <br />
+##### Examples: 
+Example 1: <p align="center">
+Follow TCP stream: <br/>
+<img src="https://i.imgur.com/xhrPmxo.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+TCP stream information: <br/>
+<img src="https://i.imgur.com/3ZgmnI7.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+10_15_7 is the latest macOS Catalina version: <br/>
+<img src="https://i.imgur.com/rBu6bEr.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+
+Example 2 with no host name: <p align="center">
+LG Electronics as the vendor ID but only "android" as the host name: <br/>
+<img src="https://i.imgur.com/QqWyo8h.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+User basic web filter & follow TCP stream of first HTTP GETrequest: <br/>
+<img src="https://i.imgur.com/5fOz7dG.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Google search reveals LM0x210APM as a LG prepaid phone: <br/>
+<img src="https://i.imgur.com/dNj5Prm.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+
+Example 3 with no vendor ID & host name: <p align="center">
+No vendor ID & host name in frame details: <br/>
+<img src="https://i.imgur.com/F8j3T4K.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Basic web filter > follow TCP stream of first HTTP GET request > shows Pixel 4A as the device & Chrome as the browser: <br/>
+<img src="https://i.imgur.com/ePBK7ku.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+
+Example 4 with little information displayed but we want to find the host name & Windows user account name. Filter by kerberos.CNameString and expand the frame details down to CNameString. Apply CNameString as a Column to find the Windows account user name. Use basic web filter to reveal their web traffic history. <br/>
+kerberos.CNameString filter is used as Kerberos traffic has TCP fragments that reveal the host name & Windows user account name. 
+<p align="center">
+kerberos.CNameString filter: <br/>
+<img src="https://i.imgur.com/iv5yG1K.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Apply as Column from CNameString: <br/>
+<img src="https://i.imgur.com/YWAONs7.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Scroll until a Windows account name is located: <br/>
+<img src="https://i.imgur.com/A6Y5d6l.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Basic web filter > follow TCP stream of first HTTP GET request: <br/>
+<img src="https://i.imgur.com/K81995R.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Result of TCP stream follow: <br/>
+<img src="https://i.imgur.com/rbV9m1U.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Summary of example 4. In this pcap, it looks like Windows account user rakesh.modi navigated to domain 'redhill.net.au' using Windows OS and Chrome browser. In the basic web filter screenshot, Tile-service… GET request is also HTTP but a simple search online shows that it's a default application being loaded after user sign-in. <br/>
+<br/>
+
+When investigating suspicious traffic; filtering by DHCP, nbns, or Kerberos may not provide hostname details. An option is filtering by Server Message Block (SMB) traffic to look for Host Annoucements. 
+<p align="center">
+SMB filter: <br/>
+<img src="https://i.imgur.com/XJbq1Tt.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+<br />
+
+#### Part 4
