@@ -170,6 +170,7 @@ TCP stream information: <br/>
 10_15_7 is the latest macOS Catalina version: <br/>
 <img src="https://i.imgur.com/rBu6bEr.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
+<br />
 
 Example 2 with no host name: <p align="center">
 LG Electronics as the vendor ID but only "android" as the host name: <br/>
@@ -181,6 +182,7 @@ User basic web filter & follow TCP stream of first HTTP GETrequest: <br/>
 Google search reveals LM0x210APM as a LG prepaid phone: <br/>
 <img src="https://i.imgur.com/dNj5Prm.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
+<br />
 
 Example 3 with no vendor ID & host name: <p align="center">
 No vendor ID & host name in frame details: <br/>
@@ -189,8 +191,9 @@ No vendor ID & host name in frame details: <br/>
 Basic web filter > follow TCP stream of first HTTP GET request > shows Pixel 4A as the device & Chrome as the browser: <br/>
 <img src="https://i.imgur.com/ePBK7ku.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
+<br />
 
-Example 4 with little information displayed but we want to find the host name & Windows user account name. Filter by kerberos.CNameString and expand the frame details down to CNameString. Apply CNameString as a Column to find the Windows account user name. Use basic web filter to reveal their web traffic history. <br/>
+Example 4 has little information displayed but we want to find the host name & Windows user account name. Filter by kerberos.CNameString and expand the frame details down to CNameString. Apply CNameString as a Column to find the Windows account user name. Use basic web filter to reveal their web traffic history. <br/>
 kerberos.CNameString filter is used as Kerberos traffic has TCP fragments that reveal the host name & Windows user account name. 
 <p align="center">
 kerberos.CNameString filter: <br/>
@@ -210,6 +213,7 @@ Result of TCP stream follow: <br/>
 <br />
 Summary of example 4. In this pcap, it looks like Windows account user rakesh.modi navigated to domain 'redhill.net.au' using Windows OS and Chrome browser. In the basic web filter screenshot, Tile-service… GET request is also HTTP but a simple search online shows that it's a default application being loaded after user sign-in. <br/>
 <br/>
+<br />
 
 When investigating suspicious traffic; filtering by DHCP, nbns, or Kerberos may not provide hostname details. An option is filtering by Server Message Block (SMB) traffic to look for Host Annoucements. 
 <p align="center">
@@ -218,4 +222,79 @@ SMB filter: <br/>
 <br />
 <br />
 
-#### Part 4
+#### Part 4 (non-malicious acitivy) includes:
+- OS traffic
+- Web browsers traffic
+- Application updates
+- Traffic from various protocols (Swarm, IRC, FTP, Tor, Email, SMB)
+
+##### Examples: 
+Example 1: imagine investigating a possible Windows malware alert but it turns out to be a Linux OS. Open pcap > basic web filter > find port 55360 frame > follow TCP stream.
+<p align="center">
+Alert details: <br/>
+<img src="https://i.imgur.com/IvjWqHJ.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Port 55360 frame: <br/>
+<img src="https://i.imgur.com/BMQRKDI.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+OS is Fedora Linux = resolve the alert: <br/>
+<img src="https://i.imgur.com/OX8NR9Q.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+<br />
+
+Example 2: pcap contains traffic from Windows 10 periodically downloading images from store-images.s-microsoft.com for Microsoft store and/or other Microsoft apps. <br />
+Open pcap > basic web filter > follow TCP stream of any frame from store-images.s-microsoft.com > no user-agent line in request header is normal for this type of traffic > response headers show jpeg image as the content type. <br />
+The image file can be exported as well: File > Export Objects > HTTP > Save the first image > example of the image for the Microsoft store.
+<p align="center">
+Follow TCP stream of store-images.s-microsoft.com host : <br/>
+<img src="https://i.imgur.com/PamywHd.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Request & Response headers: <br/>
+<img src="https://i.imgur.com/lrIRQ0x.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Export HTTP file: <br/>
+<img src="https://i.imgur.com/z5VxO16.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Save the file: <br/>
+<img src="https://i.imgur.com/7zESQJf.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Open the saved file to view image: <br/>
+<img src="https://i.imgur.com/ti5g6UJ.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+<br />
+
+Example 3: pcap contains traffic caused by Swarm protocol. Swarm is used to deliver Windows updates from other Windows computers (delivery optimization in system settings) using TCP port 7680 between Windows clients in the same LAN. <br/>
+Open pcap > basic+ web filter > 2 TCP SYN segments represent the start of 2 TCP streams > follow first frame's TCP stream > not much data but Swarm protocol is stated in the traffic > comes from both sender and receiver. 
+<p align="center">
+TCP SYN frame: <br/>
+<img src="https://i.imgur.com/Yc9AVGz.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+TCP stream information: <br/>
+<img src="https://i.imgur.com/CUB8laO.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+<br />
+
+Example 4: pcap contains traffic caused by Chrome and Edge (based on Chromium). Chrome & Edge send DNS queries for random text string queries representing non-existent domains. This is how the browsers ensure the internet service provider is not redirecting any traffic for non-existent domains. The non-existent domain queries should not resolve which is why there are repeats in the pcap; if there is a response, the response should be NXDOMAIN. <br/>
+Open pcap > filter by "dns" > notice 3 DNS queries to random string of letters ending in localdomain > filter specifically by "dns.qry.name contains localdomain" > filter by "nbns". <br/>
+NBNS traffic is seen due to Windows trying the same name query over NBNS if DNS query does not resolve or get a response from a DNS server.
+<p align="center">
+Filter by "dns": <br/>
+<img src="https://i.imgur.com/Jlevn2X.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Filter by "dns.qry.name contains localdomain": <br/>
+<img src="https://i.imgur.com/3I9s9pl.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Filter by "nbns": <br/>
+<img src="https://i.imgur.com/K0Y7TOb.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+<br />
+
+Example 5: pcap contains traffic caused by Chrome and Edge udpates to the browser. Updates to either browser generates HTTP traffic to domains ending in .gvt1.com to update the browser. <br />
+Open pcap > basic web filter.
+<p align="center">
+Basic web filter: <br/>
+<img src="https://i.imgur.com/9nfBII4.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+<br />
+
+Example 6: 
