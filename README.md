@@ -360,3 +360,36 @@ TCP stream contents disaplys email content in plain text: <br/>
 <img src="https://i.imgur.com/Q2wXh9z.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
 <br/>
+
+Example 9: pcap contains traffic recorded from an Active Directory (AD) environment with a fake domain name. In the environment, a Windows client's Z: drive is mapped to a shared folder on the Domain Controller (DC). Someone dragged a file named 2021-calendar-blank.xlsx from the Z: drive to the desktop on the Windows client. <br/>
+Open pcap > export SMB objects: File > Export Object > SMB > select the file that show 100% in the content type > save the SMB export. <br/>
+After exporting, WS automatically directs to the frame (Read Reponse) that was exported. Follow TCP stream > no meaningful information so ignore the ascii text and scroll up the data stream to look in Info column details > verify the file type in Kali terminal. 
+<p align="center">
+Export SMB objects: <br/>
+<img src="https://i.imgur.com/6lrvm7C.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Select the correct object & Save: <br/>
+<img src="https://i.imgur.com/ZeFNUZ1.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Auto directed to the frame that we exported: <br/>
+<img src="https://i.imgur.com/9xy2RQu.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+TCP stream meaningless information: <br/>
+<img src="https://i.imgur.com/Yr5DvPE.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+File request & response earlier in the data stream: <br/>
+<img src="https://i.imgur.com/a1Cx0og.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Locate exported file: <br/>
+<img src="https://i.imgur.com/QRGkAGl.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Kali does not have excel so verify file type via Terminal: <br/>
+<img src="https://i.imgur.com/1BAiHxA.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+<br />
+
+#### Part 5 (malicious acitivy) includes:
+- Malware -> malicious HTTP traffic
+- Malware -> malicious HTTPS/SSL/TLS traffic
+- Malware -> Malicious TCP traffic
+
