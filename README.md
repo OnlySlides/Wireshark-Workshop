@@ -158,9 +158,10 @@ Filter by nbns: <br/>
 <br />
 <br />
 
-In the following examples below, we look for OS & Web browser information in unencrypted HTTP request headers. After opening provided pcap example > click on basic web filter > follow TCP stream for first HTTP request to whichever domain/URL by right clicking > Follow > TCP stream > look for user-agent line in the HTTP GET request headers. Unsure what version the browser or OS is? Look it up! <br />
-##### Examples: 
-Example 1: <p align="center">
+In the following examples below, we look for OS & Web browser information in unencrypted HTTP request headers. 
+
+##### Examples: 3.1, 3.2, 3.3, 3.4
+Example 3.1: <p align="center">
 Follow TCP stream: <br/>
 <img src="https://i.imgur.com/xhrPmxo.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
@@ -172,7 +173,7 @@ TCP stream information: <br/>
 <br />
 <br />
 
-Example 2 with no host name: <p align="center">
+Example 3.2 with no host name: <p align="center">
 LG Electronics as the vendor ID but only "android" as the host name: <br/>
 <img src="https://i.imgur.com/QqWyo8h.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
@@ -184,7 +185,7 @@ Google search reveals LM0x210APM as a LG prepaid phone: <br/>
 <br />
 <br />
 
-Example 3 with no vendor ID & host name: <p align="center">
+Example 3.3 with no vendor ID & host name: <p align="center">
 No vendor ID & host name in frame details: <br/>
 <img src="https://i.imgur.com/F8j3T4K.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
@@ -193,7 +194,7 @@ Basic web filter > follow TCP stream of first HTTP GET request > shows Pixel 4A 
 <br />
 <br />
 
-Example 4 has little information displayed but we want to find the host name & Windows user account name. Filter by kerberos.CNameString and expand the frame details down to CNameString. Apply CNameString as a Column to find the Windows account user name. Use basic web filter to reveal their web traffic history. <br/>
+Example 3.4 has little information displayed but we want to find the host name & Windows user account name. Filter by kerberos.CNameString and expand the frame details down to CNameString. Apply CNameString as a Column to find the Windows account user name. Use basic web filter to reveal their web traffic history. <br/>
 kerberos.CNameString filter is used as Kerberos traffic has TCP fragments that reveal the host name & Windows user account name. 
 <p align="center">
 kerberos.CNameString filter: <br/>
@@ -227,9 +228,9 @@ SMB filter: <br/>
 - Web browsers traffic
 - Application updates
 - Traffic from various protocols (Swarm, IRC, FTP, Tor, Email, SMB)
-
-##### Examples: 
-Example 1: imagine investigating a possible Windows malware alert but it turns out to be a Linux OS. Open pcap > basic web filter > find port 55360 frame > follow TCP stream.
+  
+##### Examples: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9
+Example 4.1: imagine investigating a possible Windows malware alert but it turns out to be a Linux OS. Open pcap > basic web filter > find port 55360 frame > follow TCP stream.
 <p align="center">
 Alert details: <br/>
 <img src="https://i.imgur.com/IvjWqHJ.png" height="30%" width="30%" alt="Wireshark Workshop"/>
@@ -242,7 +243,7 @@ OS is Fedora Linux = resolve the alert: <br/>
 <br />
 <br />
 
-Example 2: pcap contains traffic from Windows 10 periodically downloading images from store-images.s-microsoft.com for Microsoft store and/or other Microsoft apps. <br />
+Example 4.2: pcap contains traffic from Windows 10 periodically downloading images from store-images.s-microsoft.com for Microsoft store and/or other Microsoft apps. <br />
 Open pcap > basic web filter > follow TCP stream of any frame from store-images.s-microsoft.com > no user-agent line in request header is normal for this type of traffic > response headers show jpeg image as the content type. <br />
 The image file can be exported as well: File > Export Objects > HTTP > Save the first image > example of the image for the Microsoft store.
 <p align="center">
@@ -263,7 +264,7 @@ Open the saved file to view image: <br/>
 <br />
 <br />
 
-Example 3: pcap contains traffic caused by Swarm protocol. Swarm is used to deliver Windows updates from other Windows computers (delivery optimization in system settings) using TCP port 7680 between Windows clients in the same LAN. <br/>
+Example 4.3: pcap contains traffic caused by Swarm protocol. Swarm is used to deliver Windows updates from other Windows computers (delivery optimization in system settings) using TCP port 7680 between Windows clients in the same LAN. <br/>
 Open pcap > basic+ web filter > 2 TCP SYN segments represent the start of 2 TCP streams > follow first frame's TCP stream > not much data but Swarm protocol is stated in the traffic > comes from both sender and receiver. 
 <p align="center">
 TCP SYN frame: <br/>
@@ -274,7 +275,7 @@ TCP stream information: <br/>
 <br />
 <br />
 
-Example 4: pcap contains traffic caused by Chrome and Edge (based on Chromium). Chrome & Edge send DNS queries for random text string queries representing non-existent domains. This is how the browsers ensure the internet service provider is not redirecting any traffic for non-existent domains. The non-existent domain queries should not resolve which is why there are repeats in the pcap; if there is a response, the response should be NXDOMAIN. <br/>
+Example 4.4: pcap contains traffic caused by Chrome and Edge (based on Chromium). Chrome & Edge send DNS queries for random text string queries representing non-existent domains. This is how the browsers ensure the internet service provider is not redirecting any traffic for non-existent domains. The non-existent domain queries should not resolve which is why there are repeats in the pcap; if there is a response, the response should be NXDOMAIN. <br/>
 Open pcap > filter by "dns" > notice 3 DNS queries to random string of letters ending in localdomain > filter specifically by "dns.qry.name contains localdomain" > filter by "nbns". <br/>
 NBNS traffic is seen due to Windows trying the same name query over NBNS if DNS query does not resolve or get a response from a DNS server.
 <p align="center">
@@ -289,7 +290,7 @@ Filter by "nbns": <br/>
 <br />
 <br />
 
-Example 5: pcap contains traffic caused by Chrome and Edge udpates to the browser. Updates to either browser generates HTTP traffic to domains ending in .gvt1.com to update the browser. <br />
+Example 4.5: pcap contains traffic caused by Chrome and Edge udpates to the browser. Updates to either browser generates HTTP traffic to domains ending in .gvt1.com to update the browser. <br />
 Open pcap > basic web filter.
 <p align="center">
 Basic web filter: <br/>
@@ -297,7 +298,7 @@ Basic web filter: <br/>
 <br />
 <br />
 
-Example 6: pcap contains traffic generated by using FileZilla on a Windows 10 host. Traffic to 193.104.215.67 over TCP port 21 is seen. TCP port 21 is the FTP control channel; TCP ports 21637 & 50926 is the FTP data channel. <br />
+Example 4.6: pcap contains traffic generated by using FileZilla on a Windows 10 host. Traffic to 193.104.215.67 over TCP port 21 is seen. TCP port 21 is the FTP control channel; TCP ports 21637 & 50926 is the FTP data channel. <br />
 Using our basic+ web + DNS filter, we will follow multiple TCP streams in this example: the 1st SYN segment to TCP port 21, the 1st SYN segment with destination port of 21637, the 2nd SYN segment going to TCP port 21, the SYN segment going to TCP port 50936.
 <p align="center">
 Basic + DNS filter > follow TCP stream of 3rd frame (49683 -> 21): <br/>
@@ -323,7 +324,7 @@ Flow of events: <br/>
 <br />
 <br />
 
-Example 7: pcap contains traffic generated by gmail using thunderbird email client on a Windows 10 host. <br/> 
+Example 4.7: pcap contains traffic generated by gmail using thunderbird email client on a Windows 10 host. <br/> 
 Open pcap > basic+ web + DNS filter > two DNS queries for imap.gmail & smtp.gmail.com > both traffic are encrypted so following TCP stream displays nothing.  
 <p align="center">
 Basic+ web + DNS filter > follow TCP stream of first imap.gmail.com frame: <br/>
@@ -334,7 +335,7 @@ TCP stream encrypted contents: <br/>
 <br />
 <br />
 
-Example 8: pcap contains traffic generated by an unsecure email using Thunderbird on a Windows 10 host. <br/> 
+Example 4.8: pcap contains traffic generated by an unsecure email using Thunderbird on a Windows 10 host. <br/> 
 Open pcap > basic+ web + DNS filter > notice two SYN segments over port 110 (POP traffic) > also notice some traffic to port 587 (SMTP traffic) > SMTP traffic is encrypted after connecting to the mail server > filter by SMTP > commands to connect to mail server before a TLS encrypted pipeline is established > follow TCP stream of any SMTP frame > see SMTP traffic but no SMTP data. <br/> 
 Back to basic+ web + DNS filter > follow TCP stream of first frame going to port 110 > notice plain login base64 string representing non-encrypted login data > copy the base64 string and decrypt > decrypted string states email address and password > back to TCP stream of pop traffic > email content can be seen in plaintext. 
 <p align="center">
@@ -361,7 +362,7 @@ TCP stream contents disaplys email content in plain text: <br/>
 <br />
 <br/>
 
-Example 9: pcap contains traffic recorded from an Active Directory (AD) environment with a fake domain name. In the environment, a Windows client's Z: drive is mapped to a shared folder on the Domain Controller (DC). Someone dragged a file named 2021-calendar-blank.xlsx from the Z: drive to the desktop on the Windows client. <br/>
+Example 4.9: pcap contains traffic recorded from an Active Directory (AD) environment with a fake domain name. In the environment, a Windows client's Z: drive is mapped to a shared folder on the Domain Controller (DC). Someone dragged a file named 2021-calendar-blank.xlsx from the Z: drive to the desktop on the Windows client. <br/>
 Open pcap > export SMB objects: File > Export Object > SMB > select the file that show 100% in the content type > save the SMB export. <br/>
 After exporting, WS automatically directs to the frame (Read Reponse) that was exported. Follow TCP stream > no meaningful information so ignore the ascii text and scroll up the data stream to look in Info column details > verify the file type in Kali terminal. 
 <p align="center">
@@ -389,7 +390,22 @@ Kali does not have excel so verify file type via Terminal: <br/>
 <br />
 
 #### Part 5 (malicious acitivy) includes:
-- Malware -> malicious HTTP traffic
+- Brief overview of Mass Distribution (Commodity) Malware
+- Malware -> malicious HTTP traffic (generally easy to detect)
 - Malware -> malicious HTTPS/SSL/TLS traffic
 - Malware -> Malicious TCP traffic
 
+There are two common types of delivery for Windows-based malware: files/links sent through email _or_ sent through (malicious) web traffic such as ads or compromised websites. 
+- Typically, a Windows executable is stored within an archive file attached to an email. This is easy for email filtering to catch. <br /> How it works: Email has an attachment within -> ZIP attached archive -> extracted executable malware. Windows by default hide file extensions so victims may not see the .exe for the extracted file name. <br /> Links sent through email are more complicated but involves enabling macros on a malicious word/excel document. 
+<p align="center">
+Example: user may only see the Adobe file ending in pdf: <br/>
+<img src="https://i.imgur.com/XvtFH3n.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+  
+- Without using emails, malware can be distributed via malicious web ads or traffic. <br /> Via malicious web ads: bad actors purchase/create malicious web ads that may be posted on legitmate websites generating traffic to unwanted or malicious URLs/files. <br /> Via web ads or traffic: bad actors compromise legitimate websites by injecting code into the web pages generating traffic to unwanted or malicious URLs/files.
+
+An example of malicious HTTP, HTTPS/SSL/TLS, and TCP traffic will be displayed below.
+
+##### Examples: 5.1, 5.2, 5.3
+Example 5.1: pcap contains post-infection unencrypted traffic caused by Formbook malware. Formbook is a messy/noisy type of malware that generate alot of HTTP GET & POST requests. Any form of Formbook will cause the same patterns in GET & POST requests; other Formbooks will have different patterns. <br /> Malware was delivered as an email with attached -> attached ZIP archive -> extracted malware. <br /> 
+Open pcap > basic web filter > scroll down to see more HTTP requests > this Formbook sample has the first four characters as e8bw > follow TCP stream of any HTTP GET request > minimal information in the HTTP request headers indicates likely malicious activity > new search filter shows the http responses as well > basic + DNS filter > find indicators of some domains that were contacted by Formbook malware that did not resolve.
