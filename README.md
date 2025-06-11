@@ -409,3 +409,29 @@ An example of malicious HTTP, HTTPS/SSL/TLS, and TCP traffic will be displayed b
 ##### Examples: 5.1, 5.2, 5.3
 Example 5.1: pcap contains post-infection unencrypted traffic caused by Formbook malware. Formbook is a messy/noisy type of malware that generate alot of HTTP GET & POST requests. Any form of Formbook will cause the same patterns in GET & POST requests; other Formbooks will have different patterns. <br /> Malware was delivered as an email with attached -> attached ZIP archive -> extracted malware. <br /> 
 Open pcap > basic web filter > scroll down to see more HTTP requests > this Formbook sample has the first four characters as e8bw > follow TCP stream of any HTTP GET request > minimal information in the HTTP request headers indicates likely malicious activity > new search filter shows the http responses as well > basic + DNS filter > find indicators of some domains that were contacted by Formbook malware that did not resolve.
+<p align="center">
+e8bw Formbook pattern for any domain it's going to: <br/>
+<img src="https://i.imgur.com/G2mf1Ww.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+Follow TCP stream of any initial HTTP GET request: <br/>
+<img src="https://i.imgur.com/PF0Iiht.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Minimal HTTP request headers information is likely malicious activity: <br/>
+<img src="https://i.imgur.com/WODp8DV.png" height="30%" width="30%" alt="Wireshark Workshop"/> 
+<br />
+Edit basic web query to (http.request or http.response or tls.handshake.type eq 1) and !(ssdp) to view HTTP responses: <br/>
+<img src="https://i.imgur.com/RBjlyk0.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+: <br/>
+<img src="" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+: <br/>
+<img src="" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+: <br/>
+<img src="" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br />
+: <br/>
+<img src="" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+
