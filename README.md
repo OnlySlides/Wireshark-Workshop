@@ -407,8 +407,9 @@ Example: user may only see the Adobe file ending in pdf: <br/>
 An example of malicious HTTP, HTTPS/SSL/TLS, and TCP traffic will be displayed below.
 
 ##### Examples: 5.1, 5.2, 5.3
-Example 5.1: pcap contains post-infection unencrypted traffic caused by Formbook malware. Formbook is a messy/noisy type of malware that generate alot of HTTP GET & POST requests. Any form of Formbook will cause the same patterns in GET & POST requests; other Formbooks will have different patterns. <br /> Malware was delivered as an email with attached -> attached ZIP archive -> extracted malware. <br /> 
-Open pcap > basic web filter > scroll down to see more HTTP requests > this Formbook sample has the first four characters as e8bw > follow TCP stream of any HTTP GET request > minimal information in the HTTP request headers indicates likely malicious activity > new search filter shows the http responses as well > basic + DNS filter > find indicators of some domains that were contacted by Formbook malware that did not resolve.
+Example 5.1: pcap contains post-infection unencrypted traffic caused by Formbook malware. Formbook is a messy/noisy type of malware that generate alot of HTTP GET & POST requests. Any form of Formbook will cause the same patterns in GET & POST requests; note that other Formbooks will have different patterns. <br /> Malware was delivered as an email with an attachment -> attached ZIP archive -> extracted malware. <br /> 
+
+Open pcap > basic web filter > scroll down to see more HTTP requests > this Formbook sample has the first four characters as e8bw > follow TCP stream of any HTTP GET request > minimal information in the HTTP request headers indicates likely malicious activity > new search filter show the HTTP responses to the GET requests > basic + DNS filter > find indicators of some domains that were contacted by Formbook malware that did not resolve.
 <p align="center">
 e8bw Formbook pattern for any domain it's going to: <br/>
 <img src="https://i.imgur.com/G2mf1Ww.png" height="30%" width="30%" alt="Wireshark Workshop"/>
@@ -419,19 +420,61 @@ Follow TCP stream of any initial HTTP GET request: <br/>
 Minimal HTTP request headers information is likely malicious activity: <br/>
 <img src="https://i.imgur.com/WODp8DV.png" height="30%" width="30%" alt="Wireshark Workshop"/> 
 <br />
-Edit basic web query to (http.request or http.response or tls.handshake.type eq 1) and !(ssdp) to view HTTP responses: <br/>
+Edit basic web query to "(http.request or http.response or tls.handshake.type eq 1) and !(ssdp)" to view HTTP responses: <br/>
 <img src="https://i.imgur.com/RBjlyk0.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
-: <br/>
-<img src="" height="30%" width="30%" alt="Wireshark Workshop"/>
+Follow TCP stream of a GET request that has a 200 OK response: <br/>
+<img src="https://i.imgur.com/eZrXYIb.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
-: <br/>
-<img src="" height="40%" width="40%" alt="Wireshark Workshop"/>
+Similar minimal HTTP request headers: <br/>
+<img src="https://i.imgur.com/ddeP0xG.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
-: <br/>
-<img src="" height="30%" width="30%" alt="Wireshark Workshop"/>
+Basic+ web + DNS filter & scroll around > notice some domains contacted by Formbook but they did not resolve: <br/>
+<img src="https://i.imgur.com/WXS5AW8.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
-: <br/>
-<img src="" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
 
+Example 5.2: pcap contains post-infection HTTPS traffic caused by a Dridex malware. <br />
+Malware was sent through email with an excel attachment or a link to download an excel file that enabled macros resulting in HTTPS traffic to retrieve a Dridex DLL. The DLL is used to infect the vulnerable Windows host with Dridex malware. <br/>
+
+Open pcap > basic web filter > lots of Microsoft related traffic > scrolling around, notice some encrypted traffic to TCP port 443 with no associated domain which is unusual, and to port 7443 which is not a standard port for web traffic > notice there is one non-Microsoft related domain > Follow TCP stream of non-Microsoft related domain frame > Google search domain in quotation marks to not directly enter a possible malicious domain > check domain at https://urlhaus.abuse.ch/ (platform for sharing malicious URLs that spread malware) > Click on the result to get more information > Malicious DLL's downloaded on Mar 10 & 11, 2021 that were submitted to Virustotal. <br/>
+<p align="center">
+Traffic to ports 7443 & 443 with no domains: <br/>
+<img src="https://i.imgur.com/Neib2F8.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br/>
+1 non-Microsoft related domain & follow TCP stream: <br/>
+<img src="https://i.imgur.com/PcEFME9.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+TCP stream; information shows that it's using Let's Encrypt certificate (not inherently malicious): <br/>
+<img src="" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br/>
+No results when Google searched the domain: <br/>
+<img src="https://i.imgur.com/Vwcflj3.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Domain search results in URLhaus prompted a report from March 10, 2021: <br/>
+<img src="https://i.imgur.com/nzEfkhx.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br/>
+URLhaus more information: <br/>
+<img src="https://i.imgur.com/Eczo3Qn.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+Malicious DLL downloads: <br/>
+<img src="https://i.imgur.com/8CFmvbg.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<br/>
+
+Cross reference the time from URLhaus with the pcap frame > circumstancial evidence that the HTTPS traffic returned a DLL for Dridex >
+<p align="center">
+Date of the traffic to domain in question: <br/>
+<img src="https://i.imgur.com/Btpn7x9.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+: <br/>
+<img src="" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+: <br/>
+<img src="" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+: <br/>
+<img src="" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
+: <br/>
+<img src="" height="40%" width="40%" alt="Wireshark Workshop"/>
+<br />
