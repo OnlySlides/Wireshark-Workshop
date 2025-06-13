@@ -534,9 +534,6 @@ Info of the infected host: <br/>
 User's credentials to their LinkedIn account: <br/>
 <img src="https://i.imgur.com/ISe1PL3.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br/>
-: <br/>
-<img src="" height="40%" width="40%" alt="Wireshark Workshop"/>
-<br/>
 
 Sometimes, DNS queries resolve to the IP address used by the Remcos RAT C2 server. The queries would be seen right before the TCP SYN segments to TCP port 2555. In this example, traffic is going directly to the IP with no associated domains. Different Remcos RAT malware samples use different IP addresses and different TCP destination ports; this example happens to be TCP port 2555. 
 <p align="center">
