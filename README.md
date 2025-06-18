@@ -93,36 +93,36 @@ Now see Host info: <br/>
 <br />
 <br />
 
-Add and save some commonly used search filter expressions as display filter buttons so there is no need to manually input the filter each time. To the right of the filter query bar > + to Add a display filter button > input name for the filter > input the specific filter query > OK. <br />
+Add and save commonly used search filter expressions as display filter buttons so there is no need to manually input the filter each time. To the right of the filter query bar > + to Add a display filter button > input name for the filter > input the specific filter query > OK. <br />
 Add and save three filters: 
 - Basic web filter: _(http.request or tls.handshake.type eq 1) and !(ssdp)_ is a basic search filter for web traffic that reveals HTTP URLs & HTTPS domain names, and hides SSDP traffic that is not necessary when reviewing web traffic.
 - Basic+ web filter: _(http.request or tls.handshake.type eq 1 or tcp.flags eq 0x0002) and !(ssdp)_ is the basic filter and looks for TCP segments that have SYN flags because we are looking for the start or attempted start of any TCP connections.
 - Basic+ web + DNS filter: _(http.request or tls.handshake.type eq 1 or tcp.flags eq 0x0002 or dns) and !(ssdp)_ is the basic+ web filter and also looks at DNS queries and responses.
 <p align="center">
 Add display filter: <br/>
-<img src="https://i.imgur.com/apnC2Ut.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/apnC2Ut.png" height="20%" width="20%" alt="Wireshark Workshop"/>
 <br />
 Add basic web filter: <br/>
-<img src="https://i.imgur.com/8wZXEXg.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/8wZXEXg.png" height="120%" width="120%" alt="Wireshark Workshop"/>
 <br />
 Add basic+ web filter: <br/>
-<img src="https://i.imgur.com/BMLgDTG.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/BMLgDTG.png" height="120%" width="120%" alt="Wireshark Workshop"/>
 <br />
 Add basic+ web + DNS filter: <br/>
-<img src="https://i.imgur.com/gi8FL36.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/gi8FL36.png" height="120%" width="120%" alt="Wireshark Workshop"/>
 <br />
 Results: <br/>
-<img src="https://i.imgur.com/fIjiuSB.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/fIjiuSB.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
 Export the updated configuration file so it can be imported into WS on a different machine if needed! Edit in the top toolbar > Configuration Profiles > Export > Rename > Save
 <p align="center">
 Export configuration profile: <br/>
-<img src="https://i.imgur.com/8V0IrB6.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/8V0IrB6.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
 Rename configuration profile & save: <br/>
-<img src="https://i.imgur.com/nT0k0D4.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/nT0k0D4.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
 <br />
   
@@ -132,17 +132,17 @@ Rename configuration profile & save: <br/>
 - Windows User Account Name in Kerberos traffic from an Active Directory environment
 - Other options for Windows host name
 
-Host information: open pcap file provided on WS > click on basic web filter > first three byftes of a MAC address represents the vendor ID of the machine _but_ not always as MAC address can be changed using various methods. 
+Host information: open pcap file provided on WS > click on basic web filter > first three bytes of a MAC address represents the vendor ID of the machine _but_ not always as MAC address can be changed using various methods. 
 <p align="center">
 Apple vendor ID example: <br/>
-<img src="https://i.imgur.com/mateVg7.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/mateVg7.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
 DHCP is how a host network hardware gets an IP address so if filtering by DHCP, we see an initial source IP address of 0.0.0.0 when it sends a DHCP request asking to be assigned an IP address. The DHCP server's IP address in the image below is 10.5.3.1 and issues the IP address of 10.5.3.177 with an ACK (acknowledge) message.
 <p align="center">
 DHCP Request & ACK: <br/>
-<img src="https://i.imgur.com/5Hnd4Ic.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/5Hnd4Ic.png" height="70%" width="70%" alt="Wireshark Workshop"/>
 <br />
 
 Expanding on request frame details under DHCP > we can see the requested IP address > also see the host name indicating traffic is from Apple hardware. 
@@ -151,54 +151,57 @@ Frame details: <br/>
 <img src="https://i.imgur.com/TxfjyhH.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
 
-Another option is filtering by NetBIOS name server (nbns) which can be used to dientify host names for Windows hosts & macOS hosts.
+Another option is filtering by NetBIOS name server (nbns) which can be used to identify host names for Windows hosts & macOS hosts.
 <p align="center">
 Filter by nbns: <br/>
-<img src="https://i.imgur.com/3RyYPZQ.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/3RyYPZQ.png" height="80%" width="80%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
 In the following examples below, we look for OS & Web browser information in unencrypted HTTP request headers. 
 
 ##### Examples: 3.1, 3.2, 3.3, 3.4
-Example 3.1: <p align="center">
+Example 3.1: open pcap > basic web filter > follow TCP stream of the first HTTP request to kansastravel.org by right-clicking the desired packet > Follow > TCP stream > look for user-agent line in the HTTP GET request headers > Browser and OS information should be present. 
+<p align="center">
 Follow TCP stream: <br/>
-<img src="https://i.imgur.com/xhrPmxo.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/xhrPmxo.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
 TCP stream information: <br/>
-<img src="https://i.imgur.com/3ZgmnI7.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/3ZgmnI7.png" height="70%" width="70%" alt="Wireshark Workshop"/>
 <br />
 10_15_7 is the latest macOS Catalina version: <br/>
-<img src="https://i.imgur.com/rBu6bEr.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/rBu6bEr.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
-Example 3.2 with no host name: <p align="center">
-LG Electronics as the vendor ID but only "android" as the host name: <br/>
-<img src="https://i.imgur.com/QqWyo8h.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+Example 3.2: open pcap > DHCP Request packet frame details state LG electronics for vendor ID but only "android" for Host name > basic web filter > follow TCP stream of first HTTP request to miniaturymazowieckie.com > review user-agent line > Google search the model.
+<p align="center">
+Packet frame details: <br/>
+<img src="https://i.imgur.com/QqWyo8h.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
-User basic web filter & follow TCP stream of first HTTP GETrequest: <br/>
-<img src="https://i.imgur.com/5fOz7dG.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+User-agent information of first HTTP GET request: <br/>
+<img src="https://i.imgur.com/5fOz7dG.png" height="70%" width="70%" alt="Wireshark Workshop"/>
 <br />
-Google search reveals LM0x210APM as a LG prepaid phone: <br/>
-<img src="https://i.imgur.com/dNj5Prm.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+Search reveals LM0x210APM as a LG prepaid phone: <br/>
+<img src="https://i.imgur.com/dNj5Prm.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
-Example 3.3 with no vendor ID & host name: <p align="center">
+Example 3.3: open pcap > DHCP Request packet frame details does not state vendor ID & Host name > basic web filter > follow TCP stream of first HTTP request to nelson-haha.api-meal.eu > review user-agent line to determine Vendor ID/device & OS used by the host.
+<p align="center">
 No vendor ID & host name in frame details: <br/>
-<img src="https://i.imgur.com/F8j3T4K.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/F8j3T4K.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
-Basic web filter > follow TCP stream of first HTTP GET request > shows Pixel 4A as the device & Chrome as the browser: <br/>
-<img src="https://i.imgur.com/ePBK7ku.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+Pixel 4A as the device & Chrome as the browser: <br/>
+<img src="https://i.imgur.com/ePBK7ku.png" height="80%" width="80%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
-Example 3.4 has little information displayed but we want to find the host name & Windows user account name. Filter by kerberos.CNameString and expand the frame details down to CNameString. Apply CNameString as a Column to find the Windows account user name. Use basic web filter to reveal their web traffic history. <br/>
+Example 3.4: little information displayed but we want to find the host name & Windows user account name. Filter by kerberos.CNameString and expand the frame details down to CNameString. Apply CNameString as a Column to find the Windows account user name. Use basic web filter to reveal their web traffic history. <br/>
 kerberos.CNameString filter is used as Kerberos traffic has TCP fragments that reveal the host name & Windows user account name. 
 <p align="center">
 kerberos.CNameString filter: <br/>
-<img src="https://i.imgur.com/iv5yG1K.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/iv5yG1K.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
 Apply as Column from CNameString: <br/>
 <img src="https://i.imgur.com/YWAONs7.png" height="40%" width="40%" alt="Wireshark Workshop"/>
@@ -207,23 +210,23 @@ Scroll until a Windows account name is located: <br/>
 <img src="https://i.imgur.com/A6Y5d6l.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
 Basic web filter > follow TCP stream of first HTTP GET request: <br/>
-<img src="https://i.imgur.com/K81995R.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/K81995R.png" height="80%" width="80%" alt="Wireshark Workshop"/>
 <br />
 Result of TCP stream follow: <br/>
-<img src="https://i.imgur.com/rbV9m1U.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/rbV9m1U.png" height="80%" width="80%" alt="Wireshark Workshop"/>
 <br />
-Summary of example 4. In this pcap, it looks like Windows account user rakesh.modi navigated to domain 'redhill.net.au' using Windows OS and Chrome browser. In the basic web filter screenshot, Tile-service… GET request is also HTTP but a simple search online shows that it's a default application being loaded after user sign-in. <br/>
+Summary of example 4. In this pcap, it looks like Windows account user rakesh.modi navigated to domain 'redhill.net.au' using Windows OS and Chrome browser. In the basic web filter screenshot, Tile-service… GET request is also HTTP but a simple search online show that it's a default application being loaded after user sign-in. <br/>
 <br/>
-<br />
+<br/>
 
 When investigating suspicious traffic; filtering by DHCP, nbns, or Kerberos may not provide hostname details. An option is filtering by Server Message Block (SMB) traffic to look for Host Annoucements. 
 <p align="center">
 SMB filter: <br/>
-<img src="https://i.imgur.com/XJbq1Tt.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/XJbq1Tt.png" height="85%" width="85%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
-#### Part 4 (non-malicious acitivy) includes:
+#### Part 4 (non-malicious activity) includes:
 - OS traffic
 - Web browsers traffic
 - Application updates
@@ -233,13 +236,13 @@ SMB filter: <br/>
 Example 4.1: imagine investigating a possible Windows malware alert but it turns out to be a Linux OS. Open pcap > basic web filter > find port 55360 frame > follow TCP stream.
 <p align="center">
 Alert details: <br/>
-<img src="https://i.imgur.com/IvjWqHJ.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/IvjWqHJ.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
 Port 55360 frame: <br/>
-<img src="https://i.imgur.com/BMQRKDI.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/BMQRKDI.png" height="95%" width="95%" alt="Wireshark Workshop"/>
 <br />
-OS is Fedora Linux = resolve the alert: <br/>
-<img src="https://i.imgur.com/OX8NR9Q.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+OS is Fedora Linux > resolve the alert: <br/>
+<img src="https://i.imgur.com/OX8NR9Q.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
