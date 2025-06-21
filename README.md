@@ -427,13 +427,13 @@ Edit basic web query to "(http.request or http.response or tls.handshake.type eq
 <img src="https://i.imgur.com/RBjlyk0.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
 Follow TCP stream of a GET request that has a 200 OK response: <br/>
-<img src="https://i.imgur.com/eZrXYIb.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/eZrXYIb.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
 Similar minimal HTTP request headers: <br/>
-<img src="https://i.imgur.com/ddeP0xG.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/ddeP0xG.png" height="80%" width="80%" alt="Wireshark Workshop"/>
 <br />
 Basic+ web + DNS filter & scroll around > notice some domains contacted by Formbook but they did not resolve: <br/>
-<img src="https://i.imgur.com/WXS5AW8.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/WXS5AW8.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
@@ -443,28 +443,28 @@ Malware was sent through email with an excel attachment or a link to download an
 Open pcap > basic web filter > lots of Microsoft related traffic > scrolling around, notice some encrypted traffic to TCP port 443 with no associated domain which is unusual, and to port 7443 which is not a standard port for web traffic > notice there is one non-Microsoft related domain > Follow TCP stream of non-Microsoft related domain frame > Google search domain in quotation marks to not directly enter a possible malicious domain > check domain at https://urlhaus.abuse.ch/ (platform for sharing malicious URLs that spread malware) > Click on the result to get more information > Malicious DLL's downloaded on Mar 10 & 11, 2021 that were submitted to Virustotal. Cross reference the time from URLhaus with the pcap frame > circumstancial evidence that the HTTPS traffic returned a DLL for Dridex. <br/>
 <p align="center">
 Traffic to ports 7443 & 443 with no domains: <br/>
-<img src="https://i.imgur.com/Neib2F8.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/Neib2F8.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br/>
 1 non-Microsoft related domain & follow TCP stream: <br/>
-<img src="https://i.imgur.com/PcEFME9.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/PcEFME9.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
 TCP stream; information shows that it's using Let's Encrypt certificate (not inherently malicious): <br/>
-<img src="" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/tpLwDQE.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br/>
 No results when Google searched the domain: <br/>
-<img src="https://i.imgur.com/Vwcflj3.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/Vwcflj3.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
 Domain search results in URLhaus prompted a report from March 10, 2021: <br/>
-<img src="https://i.imgur.com/nzEfkhx.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/nzEfkhx.png" height="80%" width="80%" alt="Wireshark Workshop"/>
 <br/>
 URLhaus more information: <br/>
-<img src="https://i.imgur.com/Eczo3Qn.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/Eczo3Qn.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
 Malicious DLL downloads: <br/>
-<img src="https://i.imgur.com/8CFmvbg.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/8CFmvbg.png" height="70%" width="70%" alt="Wireshark Workshop"/>
 <br/>
 Date of the traffic to domain in question: <br/>
-<img src="https://i.imgur.com/Btpn7x9.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/Btpn7x9.png" height="70%" width="70%" alt="Wireshark Workshop"/>
 <br />
 
 Based on the results; there are 4 suspicious IP addresses: a probable HTTPS request for Dridex DLL at destination IP address 192.185.131.33 via port 443, 3 destination IP addresses for probable Dridex post-infection HTTPS traffic (210.65.244.166 via port 443, 178.33.183.53 via port 7443, & 45.145.55.170 via port 443). <br/>
@@ -474,19 +474,19 @@ Command & control Dridex malware use self-signed certificates with unusual strin
 To view the certificate details: use the query above > expand frame details by clicking on TLS > Handshake Protocol: Certificate > Handshake Protocol: Certificate > Certificates (996 bytes) > Certificate [...]: 308 ... > signedCertificate > issuer:rdnSequence > rdSequence > somewhat random fieldnames/strings for the certificate. Other IP source addresses show similar unusual strings as well.
 <p align="center">
 4 suspicious IP addresses: <br/>
-<img src="https://i.imgur.com/c56xYUR.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/c56xYUR.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
 New query with 3 IP addresses > Expand frame details with TLS: <br/>
-<img src="https://i.imgur.com/WF6C88a.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/WF6C88a.png" height="80%" width="80%" alt="Wireshark Workshop"/>
 <br />
 Random certificate issuer data: <br/>
-<img src="https://i.imgur.com/jFktf9n.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/jFktf9n.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
 Different frame from source IP 45.145.55.170 certificate issuer data: <br/>
-<img src="https://i.imgur.com/3hgBjUe.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/3hgBjUe.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
 Normal Microsoft certificate issuer example: <br/>
-<img src="https://i.imgur.com/v5W5m76.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/v5W5m76.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
@@ -497,30 +497,30 @@ Open pcap > basic web filter > notice HTTPS traffic & Microsoft domains except 2
 Use basic+ web filter or basic+ web + DNS filter to find Remcos RAT traffic > basic + web filter > notice 3 SYN segments indicating the start of TCP streams to a destination port of 2555 & IP address of 79.134.255.19 > input new WS filter to focus on that traffic "tcp.port eq 2555 and tcp.flags eq 0x0002" > follow TCP stream of the first frame in the results > see lots of information (host name, windows user account name, OS, executable file path for Remcos RAT, etc) > scroll down > see a password list word document opened through Microsoft Word. 
 <p align="center">
 Basic web filter: <br/>
-<img src="https://i.imgur.com/APtIbQt.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/APtIbQt.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br/>
 Basic + web filter traffic to port 2555: <br/>
-<img src="https://i.imgur.com/uusgUJt.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/uusgUJt.png" height="70%" width="70%" alt="Wireshark Workshop"/>
 <br/>
 Port 2555 specific query: <br/>
-<img src="https://i.imgur.com/MP5nEv7.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/MP5nEv7.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br/>
 TCP stream of first frame: <br/>
-<img src="https://i.imgur.com/UhVb1Ke.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/UhVb1Ke.png" height="70%" width="70%" alt="Wireshark Workshop"/>
 <br/>
 
 Follow TCP stream of second frame in the port 2555 specific query > looks like an JFIF image file > show the stream as RAW data and save it > open terminal and "file" command to verify file type.
 <p align="center">
 TCP stream of second frame displaying JFIF: <br/>
-<img src="https://i.imgur.com/oV9AMmp.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/oV9AMmp.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br/>
 Display as Raw data: <br/>
-<img src="https://i.imgur.com/62Rd4at.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/62Rd4at.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br/>
 Save the Raw data: <br/>
-<img src="https://i.imgur.com/CKARFtn.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/CKARFtn.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br/>
-<img src="https://i.imgur.com/1w23rNG.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/1w23rNG.png" height="15%" width="15%" alt="Wireshark Workshop"/>
 <br/>
 Verify file type in terminal: <br/>
 <img src="https://i.imgur.com/vB4LJRW.png" height="40%" width="40%" alt="Wireshark Workshop"/>
@@ -529,17 +529,17 @@ Verify file type in terminal: <br/>
 Follow TCP stream of third frame in the port 2555 specific query > blue data is the response from the Remcos RAT command & control server > scroll to the very bottom and actual information from the infected Windows host is surfaced > scrolling up a little, credentials to various accounts in web browsers are surfaced as well. 
 <p align="center">
 TCP stream of third frame displaying Remcos RAT response: <br/>
-<img src="https://i.imgur.com/JMCuHuO.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/JMCuHuO.png" height="70%" width="70%" alt="Wireshark Workshop"/>
 <br/>
 Info of the infected host: <br/>
 <img src="https://i.imgur.com/9iqJfSW.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br/>
 User's credentials to their LinkedIn account: <br/>
-<img src="https://i.imgur.com/ISe1PL3.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/ISe1PL3.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br/>
 
 Sometimes, DNS queries resolve to the IP address used by the Remcos RAT C2 server. The queries would be seen right before the TCP SYN segments to TCP port 2555. In this example, traffic is going directly to the IP with no associated domains. Different Remcos RAT malware samples use different IP addresses and different TCP destination ports; this example happens to be TCP port 2555. 
 <p align="center">
 No DNS query prior to port 2555 SYN segment: <br/>
-<img src="https://i.imgur.com/XvT7GMB.png" height="40%" width="40%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/XvT7GMB.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br/>
