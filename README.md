@@ -27,24 +27,24 @@ This workshop was split into five videos which is broken down into 4 sections fo
 - Create different search filter expressions
 
 To configure profiles: Edit at the top toolbar > Configuration Profiles > copy Default profile > rename to "Updated" or whatever you wish > OK. <br/>
-Any changes made to WS will now be made to the Updated configuration profile. The Updated configuration file is located in a different location. 
+Any changes made to WS will now be made to the Updated configuration profile. The Updated configuration file is saved in a different location compared to the Default. 
 <p align="center">
 Configuration profiles: <br/>
-<img src="https://i.imgur.com/eMATvbW.png" height="50%" width="50%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/eMATvbW.png" height="55%" width="55%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
-Remove Frame number, Protocol, and Frame length. Right click the column header > Remove this column. After, there should be four columns. 
+Remove Frame number, Protocol, and Frame length columns. Right click the column header > Remove this column. After, there should be four columns. 
 <p align="center">
 Example of removing frame number. Same process for protocol and frame length: <br/>
 <img src="https://i.imgur.com/F7ZxpGs.png" height="15%" width="15%" alt="Wireshark Workshop"/>
 <br />
-4 columns display: <br/>
+Display with four columns: <br/>
 <img src="https://i.imgur.com/0LkocNG.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
-To add/remove display columns: right click any column headers > column preferences > add column button at the bottom > update column title > change column type > drag column to proper location.
+To add/remove display columns: right click any column header > column preferences > add column button at the bottom > update column title > change column type > drag column to proper location.
 <p align="center">
 Right click any column > column preferences: <br/>
 <img src="https://i.imgur.com/MV7sRaj.png" height="20%" width="20%" alt="Wireshark Workshop"/>
@@ -77,7 +77,7 @@ Time Display Format: <br/>
 Select Seconds instead of the default Automatic: <br/>
 <img src="https://i.imgur.com/p6Yfh9a.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
-Results - cleaner time display: <br/>
+Results in a cleaner time display: <br/>
 <img src="https://i.imgur.com/NLTqn0u.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
 <br />
@@ -93,11 +93,11 @@ Now see Host info: <br/>
 <br />
 <br />
 
-Add and save commonly used search filter expressions as display filter buttons so there is no need to manually input the filter each time. To the right of the filter query bar > + to Add a display filter button > input name for the filter > input the specific filter query > OK. <br />
+Add and save commonly used search filter expressions as display filter buttons so there is no need to manually input the query each time. To the right of the filter query bar > + to Add a display filter button > input name for the filter > input the specific filter query > OK. <br />
 Add and save three filters: 
 - Basic web filter: _(http.request or tls.handshake.type eq 1) and !(ssdp)_ is a basic search filter for web traffic that reveals HTTP URLs & HTTPS domain names, and hides SSDP traffic that is not necessary when reviewing web traffic.
 - Basic+ web filter: _(http.request or tls.handshake.type eq 1 or tcp.flags eq 0x0002) and !(ssdp)_ is the basic filter and looks for TCP segments that have SYN flags because we are looking for the start or attempted start of any TCP connections.
-- Basic+ web + DNS filter: _(http.request or tls.handshake.type eq 1 or tcp.flags eq 0x0002 or dns) and !(ssdp)_ is the basic+ web filter and also looks at DNS queries and responses.
+- Basic+ web + DNS filter: _(http.request or tls.handshake.type eq 1 or tcp.flags eq 0x0002 or dns) and !(ssdp)_ is the basic+ web filter and looks at DNS queries and responses.
 <p align="center">
 Add display filter: <br/>
 <img src="https://i.imgur.com/apnC2Ut.png" height="20%" width="20%" alt="Wireshark Workshop"/>
