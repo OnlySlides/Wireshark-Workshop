@@ -132,7 +132,7 @@ Rename configuration profile & save: <br/>
 - Windows User Account Name in Kerberos traffic from an Active Directory environment
 - Other options for Windows host name
 
-Host information: open pcap file provided on WS > click on basic web filter > first three bytes of a MAC address represents the vendor ID of the machine _but_ not always as MAC address can be changed using various methods. 
+Host information: open pcap provided in workshopp > click on basic web filter > first three bytes of a MAC address represents the vendor ID of the machine _but_ not always as MAC addresses can be changed using various methods. 
 <p align="center">
 Apple vendor ID example: <br/>
 <img src="https://i.imgur.com/mateVg7.png" height="50%" width="50%" alt="Wireshark Workshop"/>
@@ -212,14 +212,14 @@ Scroll until a Windows account name is located: <br/>
 Basic web filter > follow TCP stream of first HTTP GET request: <br/>
 <img src="https://i.imgur.com/K81995R.png" height="80%" width="80%" alt="Wireshark Workshop"/>
 <br />
-Result of TCP stream follow: <br/>
+TCP stream info: <br/>
 <img src="https://i.imgur.com/rbV9m1U.png" height="80%" width="80%" alt="Wireshark Workshop"/>
 <br />
 Summary of example 4. In this pcap, it looks like Windows account user rakesh.modi navigated to domain 'redhill.net.au' using Windows OS and Chrome browser. In the basic web filter screenshot, Tile-service… GET request is also HTTP but a simple search online show that it's a default application being loaded after user sign-in. <br/>
 <br/>
 <br/>
 
-When investigating suspicious traffic; filtering by DHCP, nbns, or Kerberos may not provide hostname details. An option is filtering by Server Message Block (SMB) traffic to look for Host Annoucements. 
+When investigating suspicious traffic; filtering by DHCP, nbns, or Kerberos may not provide hostname details. Another option is filtering by Server Message Block (SMB) traffic to look for Host Annoucements. 
 <p align="center">
 SMB filter: <br/>
 <img src="https://i.imgur.com/XJbq1Tt.png" height="85%" width="85%" alt="Wireshark Workshop"/>
@@ -233,7 +233,7 @@ SMB filter: <br/>
 - Traffic from various protocols (Swarm, IRC, FTP, Tor, Email, SMB)
   
 ##### Examples: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9
-Example 4.1: imagine investigating a possible Windows malware alert but it turns out to be a Linux OS. Open pcap > basic web filter > find port 55360 frame > follow TCP stream.
+Example 4.1: imagine investigating a possible Wins malware alert but it turns out to be a Linux OS. Open pcap > basic web filter > find port 55360 frame > follow TCP stream.
 <p align="center">
 Alert details: <br/>
 <img src="https://i.imgur.com/IvjWqHJ.png" height="40%" width="40%" alt="Wireshark Workshop"/>
@@ -246,9 +246,9 @@ OS is Fedora Linux > resolve the alert: <br/>
 <br />
 <br />
 
-Example 4.2: pcap contains traffic from Windows 10 periodically downloading images from store-images.s-microsoft.com for Microsoft store and/or other Microsoft apps. <br />
+Example 4.2: pcap contains traffic from Wins 10 periodically downloading images from store-images.s-microsoft.com for Microsoft (MS) store and/or other MS apps. <br />
 Open pcap > basic web filter > follow TCP stream of any frame from store-images.s-microsoft.com > no user-agent line in request header is normal for this type of traffic > response headers show jpeg image as the content type. <br />
-The image file can be exported as well: File > Export Objects > HTTP > Save the first image > example of the image for the Microsoft store.
+The image file can be exported: File > Export Objects > HTTP > Save the first image > example of the image for the MS store.
 <p align="center">
 Follow TCP stream of store-images.s-microsoft.com host : <br/>
 <img src="https://i.imgur.com/PamywHd.png" height="60%" width="60%" alt="Wireshark Workshop"/>
@@ -267,7 +267,7 @@ Open the saved file to view image: <br/>
 <br />
 <br />
 
-Example 4.3: pcap contains traffic caused by Swarm protocol. Swarm is used to deliver Windows updates from other Windows computers (delivery optimization in system settings) using TCP port 7680 between Windows clients in the same LAN. <br/>
+Example 4.3: pcap contains traffic caused by Swarm protocol. Swarm is used to deliver Windows updates from other Wins computers (delivery optimization in system settings) using TCP port 7680 between Wins clients in the same LAN. <br/>
 Open pcap > basic+ web filter > 2 TCP SYN segments represent the start of 2 TCP streams > follow first frame's TCP stream > not much data but Swarm protocol is stated in the traffic > comes from both sender and receiver. 
 <p align="center">
 TCP SYN frame: <br/>
@@ -293,7 +293,7 @@ Filter by "nbns": <br/>
 <br />
 <br />
 
-Example 4.5: pcap contains traffic caused by Chrome and Edge udpates to the browser. Updates to either browser generates HTTP traffic to domains ending in .gvt1.com to update the browser. <br />
+Example 4.5: pcap contains traffic caused by Chrome and Edge updates to the browser. Updates to either browser generates HTTP traffic to domains ending in .gvt1.com to update the browser. <br />
 Open pcap > basic web filter.
 <p align="center">
 Basic web filter: <br/>
@@ -301,13 +301,13 @@ Basic web filter: <br/>
 <br />
 <br />
 
-Example 4.6: pcap contains traffic generated by using FileZilla on a Windows 10 host. Traffic to 193.104.215.67 over TCP port 21 is seen. TCP port 21 is the FTP control channel; TCP ports 21637 & 50926 is the FTP data channel. <br />
-Using our basic+ web + DNS filter, we will follow multiple TCP streams in this example: the 1st SYN segment to TCP port 21, the 1st SYN segment with destination port of 21637, the 2nd SYN segment going to TCP port 21, the SYN segment going to TCP port 50936.
+Example 4.6: pcap contains traffic generated by FileZilla on a Wins 10 host. Traffic to 193.104.215.67 over TCP port 21 is seen. TCP port 21 is the FTP control channel; TCP ports 21637 & 50926 is the FTP data channel. <br />
+Using basic+ web + DNS filter, we follow multiple TCP streams in this example: the 1st SYN segment to TCP port 21, the 1st SYN segment with destination port of 21637, the 2nd SYN segment going to TCP port 21, and the SYN segment going to TCP port 50936.
 <p align="center">
 Basic + DNS filter > follow TCP stream of 3rd frame (49683 -> 21): <br/>
 <img src="https://i.imgur.com/atsqAYy.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
-TCP stream displays Anonymous user (logging in) & LIST which lists the directory of the FTP server: <br/>
+TCP stream displays Anonymous user (logging in) & LIST (lists the directory of the FTP server): <br/>
 <img src="https://i.imgur.com/Igq6AlW.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
 TCP stream of 4th frame (destination port of 21637) displays a directory list from the FTP server: <br/>
@@ -316,7 +316,7 @@ TCP stream of 4th frame (destination port of 21637) displays a directory list fr
 TCP stream of 5th frame (2nd SYN segment going to port 21) displays user retrieving a file named 'licenses.txt': <br/>
 <img src="https://i.imgur.com/2qtUBSr.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
-TCP stream of 6th frame (SYN segment going to port 50926) displays content of license.txt file: <br/>
+TCP stream of 6th frame (SYN segment going to port 50926) displays license.txt file content: <br/>
 <img src="https://i.imgur.com/Z7zKTv0.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
   
@@ -327,8 +327,8 @@ Flow of events: <br/>
 <br />
 <br />
 
-Example 4.7: pcap contains traffic generated by gmail using thunderbird email client on a Windows 10 host. <br/> 
-Open pcap > basic+ web + DNS filter > two DNS queries for imap.gmail & smtp.gmail.com > both traffic are encrypted (IMAPS protocol) so following TCP streams display nothing.  
+Example 4.7: pcap contains traffic generated by gmail using Thunderbird email client on a Wins 10 host. <br/> 
+Open pcap > basic+ web + DNS filter > two DNS queries for imap.gmail & smtp.gmail.com > both traffic are encrypted (IMAPS protocol) so following TCP streams display nothing.
 <p align="center">
 Basic+ web + DNS filter > follow TCP stream of first imap.gmail.com frame: <br/>
 <img src="https://i.imgur.com/kXQI6BG.png" height="60%" width="60%" alt="Wireshark Workshop"/>
