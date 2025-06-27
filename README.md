@@ -12,8 +12,8 @@ Source: [Brad Duncan at Palo Alto Networks Unit 42](https://unit42.paloaltonetwo
 - Understand what Wins malware traffic looks like
 
 ### Tools Used
-- Wireshark on Linux virtual machine
-- Kali on Linux virtual machine
+- Wireshark on Linux virtual machine to view the workshop provided pcaps
+- Kali on Linux virtual machine as some pcaps contain Windows malware
 
 ### Takeaways
 Basic query skills were learned to find flags in WS while working through the SOC analyst pathway on Hackthebox and some miscellaneous modules on TryHackMe. However, this workshop provided essential information (info) on the capabilities WS can provide through the lens of a professional and the content that we need to understand first before diving in deeper. The content mentioned includes subjects like: vendor ID, User-Agent, verify file type in command line after export, etc. This workshop was a great introductory overview on how I can configure WS to my personal preferences, and distinguish what may be normal vs abnormal processes. 
