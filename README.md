@@ -1,7 +1,7 @@
 # Wireshark-Workshop
 
 ## Objective
-The primary focus of this workshop was to follow along with Brad to learn more of Wireshark's(WS) capabilities and how industry professionals use Wireshark as a tool to review Windows-based traffic generated from potential malware. This workshop goes over Wireshark set-up, host identification, non-malicious activity, and an introduction to Windows (Wins) malware infections. 
+The primary focus of this workshop was to follow along with Brad to learn more of Wireshark's(WS) capabilities and how industry professionals use Wireshark as a tool to review Windows-based traffic generated from potential malware. This workshop goes over Wireshark set-up, host identification, non-malicious activity, and an introduction to Windows(Wins) malware infections. 
 
 Source: [Brad Duncan at Palo Alto Networks Unit 42](https://unit42.paloaltonetworks.com/wireshark-workshop-videos/)
 
@@ -16,10 +16,10 @@ Source: [Brad Duncan at Palo Alto Networks Unit 42](https://unit42.paloaltonetwo
 - Kali on Linux virtual machine as some pcaps contain Windows malware
 
 ### Takeaways
-Basic query skills were learned to find flags in WS while working through the SOC analyst pathway on Hackthebox and some miscellaneous modules on TryHackMe. However, this workshop provided essential information (info) on the capabilities WS can provide through the lens of a professional and the content that we need to understand first before diving in deeper. The content mentioned includes subjects like: vendor ID, User-Agent, verify file type in command line after export, etc. This workshop was a great introductory overview on how I can configure WS to my personal preferences, and distinguish what may be normal vs abnormal processes. 
+Basic query skills were learned to find flags in WS while working through the SOC analyst pathway on Hackthebox and some modules on TryHackMe. However, this workshop provided essential information (info) on the capabilities WS can provide through the lens of a professional and the content that we need to understand first before diving in deeper. The content mentioned includes subjects like: vendor ID, User-Agent, verify file type in command line after export, etc. This workshop was a great introductory overview on how I can configure WS to my personal preferences, and distinguish what may be normal vs abnormal processes. 
 
 ### Parts
-This workshop was split into five videos which is broken down into 4 sections for easier reading and organization (part 2, part 3, part 4, part 5). Part 1 is ommitted as it contains an introduction and prequisites for the workshop.
+This workshop was split into five videos which is broken down into 4 sections for easier reading and organization (part 2, part 3, part 4, part 5). Part 1 is ommitted as it contains an introduction and prequisites not applicable to me.
 
 #### Part 2 (WS prefences set-up) includes: 
 - Adding custom view in a new configuration profile
@@ -58,7 +58,7 @@ Add a new column: <br/>
 Update title to Port & type=destination port (unresolved: shows raw port number): <br/>
 <img src="https://i.imgur.com/Dl7dbqP.png" height="35%" width="35%" alt="Wireshark Workshop"/>
 <br />
-Adding another column for unresolved source port > drag to preferred display location: <br/>
+Add another column for unresolved source port > drag to preferred display location: <br/>
 <img src="https://i.imgur.com/GsqxRtQ.png" height="35%" width="35%" alt="Wireshark Workshop"/>
 <br />
 Final column preferences: <br/>
@@ -77,13 +77,13 @@ Time Display Format: <br/>
 Select Seconds instead of the default Automatic: <br/>
 <img src="https://i.imgur.com/p6Yfh9a.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
-Results in a cleaner time display: <br/>
+Results in an easier to read time display: <br/>
 <img src="https://i.imgur.com/NLTqn0u.png" height="30%" width="30%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
-Adding additional custom columns to display host names associated with HTTP and HTTPS traffic when reviewing web traffic. Similar steps to earlier for adding/removing display columns. <br />
-Column preferences > Add a new column > rename to Host > Type = Custom > Fields = _http.host or tls.handshake.extensions_server_name_ > move column above Info > Apply > OK. 
+Add additional custom columns to display host names associated with HTTP and HTTPS traffic when reviewing web traffic. Similar steps to earlier for adding/removing display columns. <br />
+Column preferences > Add a new column > rename to Host > Type = Custom > Fields = "http.host or tls.handshake.extensions_server_name" > move column above Info > Apply > OK. 
 <p align="center">
 Add Custom column: <br/>
 <img src="https://i.imgur.com/l3VLakt.png" height="70%" width="70%" alt="Wireshark Workshop"/>
@@ -95,9 +95,9 @@ Now see Host info: <br/>
 
 Add and save commonly used search filter expressions as display filter buttons so there is no need to manually input the query each time. To the right of the filter query bar > + to Add a display filter button > input name for the filter > input the specific filter query > OK. <br />
 Add and save three filters: 
-- Basic web filter: _(http.request or tls.handshake.type eq 1) and !(ssdp)_ is a basic search filter for web traffic that reveals HTTP URLs & HTTPS domain names, and hides SSDP traffic that is not necessary when reviewing web traffic.
-- Basic+ web filter: _(http.request or tls.handshake.type eq 1 or tcp.flags eq 0x0002) and !(ssdp)_ is the basic filter and looks for TCP segments that have SYN flags because we are looking for the start or attempted start of any TCP connections.
-- Basic+ web + DNS filter: _(http.request or tls.handshake.type eq 1 or tcp.flags eq 0x0002 or dns) and !(ssdp)_ is the basic+ web filter and looks at DNS queries and responses.
+- Basic web filter: "(http.request or tls.handshake.type eq 1) and !(ssdp)" is a basic search filter for web traffic that reveals HTTP URLs & HTTPS domain names, and hides SSDP traffic that is not necessary when reviewing web traffic.
+- Basic+ web filter: "(http.request or tls.handshake.type eq 1 or tcp.flags eq 0x0002) and !(ssdp)" looks for TCP segments that have SYN flags because we are looking for the start or attempted start of any TCP connections.
+- Basic+ web + DNS filter: "(http.request or tls.handshake.type eq 1 or tcp.flags eq 0x0002 or dns) and !(ssdp)" looks at DNS queries and responses.
 <p align="center">
 Add display filter: <br/>
 <img src="https://i.imgur.com/apnC2Ut.png" height="20%" width="20%" alt="Wireshark Workshop"/>
@@ -129,7 +129,7 @@ Rename configuration profile & save: <br/>
 #### Part 3 (Host Identification) includes locating & finding: 
 - Host information
 - Operating System (OS) and web browser
-- Windows User Account Name in Kerberos traffic from an Active Directory environment
+- Windows User Account Name in Kerberos traffic from an Active Directory(AD) environment
 - Other options for Windows host name
 
 Host information: open pcap provided in workshopp > click on basic web filter > first three bytes of a MAC address represents the vendor ID of the machine _but_ not always as MAC addresses can be changed using various methods. 
@@ -139,13 +139,13 @@ Apple vendor ID example: <br/>
 <br />
 <br />
 
-DHCP is how a host network hardware gets an IP address so if filtering by DHCP, we see an initial source IP address of 0.0.0.0 when it sends a DHCP request asking to be assigned an IP address. The DHCP server's IP address in the image below is 10.5.3.1 and issues the IP address of 10.5.3.177 with an ACK (acknowledge) message.
+DHCP is how a host network hardware gets an IP address so if filtering by DHCP, initial source IP address is 0.0.0.0 when it sends a DHCP request asking to be assigned an IP address. The DHCP server's IP address in the image below is 10.5.3.1 and issues the IP address of 10.5.3.177 with an ACK (acknowledge) message.
 <p align="center">
 DHCP Request & ACK: <br/>
 <img src="https://i.imgur.com/5Hnd4Ic.png" height="70%" width="70%" alt="Wireshark Workshop"/>
 <br />
 
-Expanding on request frame details under DHCP > we can see the requested IP address > also see the host name indicating traffic is from Apple hardware. 
+Expanding on request frame details under DHCP >erequested IP address is displayed > host name is also displayed indicating traffic is from Apple hardware. 
 <p align="center">
 Frame details: <br/>
 <img src="https://i.imgur.com/TxfjyhH.png" height="40%" width="40%" alt="Wireshark Workshop"/>
@@ -154,23 +154,23 @@ Frame details: <br/>
 Another option is filtering by NetBIOS name server (nbns) which can be used to identify host names for Windows hosts & macOS hosts.
 <p align="center">
 Filter by nbns: <br/>
-<img src="https://i.imgur.com/3RyYPZQ.png" height="80%" width="80%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/3RyYPZQ.png" height="80%" width="90%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
-In the following examples below, we look for OS & Web browser information in unencrypted HTTP request headers. 
+In the following examples below, we look for OS & Web browser info in unencrypted HTTP request headers. 
 
 ##### Examples: 3.1, 3.2, 3.3, 3.4
-Example 3.1: open pcap > basic web filter > follow TCP stream of the first HTTP request to kansastravel.org by right-clicking the desired packet > Follow > TCP stream > look for user-agent line in the HTTP GET request headers > Browser and OS information should be present. 
+Example 3.1: open pcap > basic web filter > follow TCP stream of the first HTTP request to kansastravel.org by right-clicking the desired packet > Follow > TCP stream > locate user-agent line in the HTTP GET request headers > browser and OS info should be present. 
 <p align="center">
 Follow TCP stream: <br/>
 <img src="https://i.imgur.com/xhrPmxo.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
-TCP stream information: <br/>
+TCP stream info: <br/>
 <img src="https://i.imgur.com/3ZgmnI7.png" height="70%" width="70%" alt="Wireshark Workshop"/>
 <br />
 10_15_7 is the latest macOS Catalina version: <br/>
-<img src="https://i.imgur.com/rBu6bEr.png" height="30%" width="30%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/rBu6bEr.png" height="30%" width="40%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
@@ -197,13 +197,13 @@ Pixel 4A as the device & Chrome as the browser: <br/>
 <br />
 <br />
 
-Example 3.4: little information displayed but we want to find the host name & Windows user account name. Filter by kerberos.CNameString and expand the frame details down to CNameString. Apply CNameString as a Column to find the Windows account user name. Use basic web filter to reveal their web traffic history. <br/>
+Example 3.4: little info displayed but we want to find the host name & Windows user account name. Filter by kerberos.CNameString and expand the frame details down to CNameString. Apply CNameString as a Column to find the Windows account user name. Use basic web filter to reveal their web traffic history. <br/>
 kerberos.CNameString filter is used as Kerberos traffic has TCP fragments that reveal the host name & Windows user account name. 
 <p align="center">
 kerberos.CNameString filter: <br/>
 <img src="https://i.imgur.com/iv5yG1K.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
-Apply as Column from CNameString: <br/>
+Locate CNameString & apply as Column: <br/>
 <img src="https://i.imgur.com/YWAONs7.png" height="40%" width="40%" alt="Wireshark Workshop"/>
 <br />
 Scroll until a Windows account name is located: <br/>
@@ -215,14 +215,14 @@ Basic web filter > follow TCP stream of first HTTP GET request: <br/>
 TCP stream info: <br/>
 <img src="https://i.imgur.com/rbV9m1U.png" height="80%" width="80%" alt="Wireshark Workshop"/>
 <br />
-Summary of example 4. In this pcap, it looks like Windows account user rakesh.modi navigated to domain 'redhill.net.au' using Windows OS and Chrome browser. In the basic web filter screenshot, Tile-service… GET request is also HTTP but a simple search online show that it's a default application being loaded after user sign-in. <br/>
+Summary of example 4. In this pcap, it looks like Windows account user rakesh.modi navigated to domain 'redhill.net.au' using Windows OS and Chrome browser. In the basic web filter screenshot, Tile-service… GET request is also HTTP but a search online show that it's a default application being loaded after user sign-in. <br/>
 <br/>
 <br/>
 
 When investigating suspicious traffic; filtering by DHCP, nbns, or Kerberos may not provide hostname details. Another option is filtering by Server Message Block (SMB) traffic to look for Host Annoucements. 
 <p align="center">
 SMB filter: <br/>
-<img src="https://i.imgur.com/XJbq1Tt.png" height="85%" width="85%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/XJbq1Tt.png" height="85%" width="95%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
@@ -251,7 +251,7 @@ Open pcap > basic web filter > follow TCP stream of any frame from store-images.
 The image file can be exported: File > Export Objects > HTTP > Save the first image > example of the image for the MS store.
 <p align="center">
 Follow TCP stream of store-images.s-microsoft.com host : <br/>
-<img src="https://i.imgur.com/PamywHd.png" height="60%" width="60%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/PamywHd.png" height="60%" width="70%" alt="Wireshark Workshop"/>
 <br />
 Request & Response headers: <br/>
 <img src="https://i.imgur.com/lrIRQ0x.png" height="50%" width="50%" alt="Wireshark Workshop"/>
@@ -262,7 +262,7 @@ Export HTTP file: <br/>
 Save the file: <br/>
 <img src="https://i.imgur.com/7zESQJf.png" height="10%" width="10%" alt="Wireshark Workshop"/>
 <br />
-Open the saved file to view image: <br/>
+Open the saved file to view images of games: <br/>
 <img src="https://i.imgur.com/ti5g6UJ.png" height="35%" width="35%" alt="Wireshark Workshop"/>
 <br />
 <br />
@@ -273,23 +273,24 @@ Open pcap > basic+ web filter > 2 TCP SYN segments represent the start of 2 TCP 
 TCP SYN frame: <br/>
 <img src="https://i.imgur.com/Yc9AVGz.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
-TCP stream information: <br/>
+TCP stream info: <br/>
 <img src="https://i.imgur.com/CUB8laO.png" height="70%" width="70%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
-Example 4.4: pcap contains traffic caused by Chrome and Edge (based on Chromium). Chrome & Edge send DNS queries for random text string queries representing non-existent domains. This is how the browsers ensure the internet service provider is not redirecting any traffic for non-existent domains. The non-existent domain queries should not resolve which is why there are repeats in the pcap; if there is a response, the response should be NXDOMAIN. <br/>
+Example 4.4: pcap contains traffic caused by Chrome and Edge (based on Chromium). Chrome & Edge send DNS queries for random text string queries representing non-existent domains. This is how the browsers ensure the internet service provider(isp) is not redirecting any traffic for non-existent domains. The non-existent domain queries should not resolve which is why there are repeats in the pcap; if there is a response, the response should be NXDOMAIN. <br/>
+
 Open pcap > filter by "dns" > notice 3 DNS queries to random string of letters ending in localdomain > filter specifically by "dns.qry.name contains localdomain" > filter by "nbns". <br/>
 NBNS traffic is seen due to Windows trying the same name query over NBNS if DNS query does not resolve or get a response from a DNS server.
 <p align="center">
 Filter by "dns": <br/>
-<img src="https://i.imgur.com/Jlevn2X.png" height="60%" width="60%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/Jlevn2X.png" height="60%" width="70%" alt="Wireshark Workshop"/>
 <br />
 Filter by "dns.qry.name contains localdomain": <br/>
-<img src="https://i.imgur.com/3I9s9pl.png" height="60%" width="60%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/3I9s9pl.png" height="60%" width="70%" alt="Wireshark Workshop"/>
 <br />
 Filter by "nbns": <br/>
-<img src="https://i.imgur.com/K0Y7TOb.png" height="60%" width="60%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/K0Y7TOb.png" height="60%" width="65%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
@@ -297,7 +298,7 @@ Example 4.5: pcap contains traffic caused by Chrome and Edge updates to the brow
 Open pcap > basic web filter.
 <p align="center">
 Basic web filter: <br/>
-<img src="https://i.imgur.com/9nfBII4.png" height="80%" width="80%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/9nfBII4.png" height="80%" width="90%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
@@ -320,10 +321,10 @@ TCP stream of 6th frame (SYN segment going to port 50926) displays license.txt f
 <img src="https://i.imgur.com/Z7zKTv0.png" height="50%" width="50%" alt="Wireshark Workshop"/>
 <br />
   
-_ftp.request.command or ftp-data_ command can be used to see the flow of events.
+"ftp.request.command or ftp-data" command can be used to see the flow of events.
 <p align="center">
 Flow of events: <br/>
-<img src="https://i.imgur.com/5vwQ5B9.png" height="50%" width="50%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/5vwQ5B9.png" height="50%" width="60%" alt="Wireshark Workshop"/>
 <br />
 <br />
 
@@ -340,7 +341,6 @@ TCP stream encrypted content: <br/>
 
 Example 4.8: pcap contains traffic generated by an unsecure email using Thunderbird on a Wins 10 host. <br/> 
 Open pcap > basic+ web + DNS filter > notice two SYN segments over port 110 (POP traffic) > also notice some traffic to port 587 (SMTP traffic) > SMTP traffic is encrypted after connecting to the mail server > filter by SMTP > commands to connect to mail server before a TLS encrypted pipeline is established > follow TCP stream of any SMTP frame > see SMTP traffic but no SMTP data. <br/> 
-Back to basic+ web + DNS filter > follow TCP stream of first frame going to port 110 > notice plain login base64 string representing non-encrypted login data > copy the base64 string and decrypt > decrypted string states email address and password > back to TCP stream of pop traffic > email content can be seen in plaintext. 
 <p align="center">
 Basic+ web + DNS filter > two SYN segments over port 110 & some traffic to port 587: <br/>
 <img src="https://i.imgur.com/BsgrWM8.png" height="70%" width="70%" alt="Wireshark Workshop"/>
@@ -351,6 +351,9 @@ Filter by SMTP & follow TCP stream of any SMTP frame: <br/>
 SMTP TCP stream displays traffic but no data: <br/>
 <img src="https://i.imgur.com/TxInUO2.png" height="35%" width="35%" alt="Wireshark Workshop"/>
 <br />
+  
+Back to basic+ web + DNS filter > follow TCP stream of first frame going to port 110 > notice plain login base64 string representing non-encrypted login data > copy the base64 string and decrypt > decrypted string states email address and password > back to TCP stream of pop traffic > email content can be seen in plaintext. 
+<p align="center">
 Basic+ web + DNS filter > follow TCP stream of either port 110 traffic: <br/>
 <img src="https://i.imgur.com/pA00BjP.png" height="60%" width="60%" alt="Wireshark Workshop"/>
 <br />
@@ -358,7 +361,7 @@ AUTH PLAIN=no information is encrypted > string is base64 binary: <br/>
 <img src="https://i.imgur.com/uS21Gnk.png" height="55%" width="55%" alt="Wireshark Workshop"/>
 <br />
 Copy & paste base64 string into decoder: <br/>
-<img src="https://i.imgur.com/HdRCTHS.png" height="35%" width="35%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/HdRCTHS.png" height="35%" width="45%" alt="Wireshark Workshop"/>
 <br />
 TCP stream content display email content in plain text: <br/>
 <img src="https://i.imgur.com/Q2wXh9z.png" height="35%" width="35%" alt="Wireshark Workshop"/>
