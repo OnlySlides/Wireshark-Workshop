@@ -369,6 +369,7 @@ TCP stream content display email content in plain text: <br/>
 <br/>
 
 Example 4.9: pcap contains traffic recorded from an Active Directory (AD) environment with a fake domain name. In the environment, a Wins client's Z: drive is mapped to a shared folder on the Domain Controller (DC). Someone dragged a file named 2021-calendar-blank.xlsx from the Z: drive to the desktop on the Windows client. <br/>
+
 Open pcap > export SMB objects: File > Export Object > SMB > select the file that show 100% in the content type > save the SMB export. <br/>
 After exporting, WS automatically directs to the frame (Read Reponse) that was exported. Follow TCP stream > no meaningful information so ignore the ascii text and scroll up the data stream to look in the Info column details > verify the file type in Kali terminal. 
 <p align="center">
@@ -395,7 +396,7 @@ Kali does not have excel so verify file type via Terminal: <br/>
 <br />
 <br />
 
-#### Part 5 (malicious acitivy) includes:
+#### Part 5 (malicious activity) includes:
 - Brief overview of Mass Distribution (Commodity) Malware
 - Malware -> review malicious HTTP traffic (generally easy to detect)
 - Malware -> review malicious HTTPS/SSL/TLS traffic
@@ -410,12 +411,12 @@ Example: user may only see the Adobe file ending in pdf: <br/>
   
 - Without using emails, malware can be distributed via malicious web ads or traffic. <br /> Via malicious web ads: bad actors purchase/create malicious web ads that may be posted on legitmate websites generating traffic to unwanted or malicious URLs/files. <br /> Via web ads or traffic: bad actors compromise legitimate websites by injecting code into the web pages generating traffic to unwanted or malicious URLs/files.
 
-An example of malicious HTTP, HTTPS/SSL/TLS, and TCP traffic will be displayed below.
+An example of malicious HTTP, HTTPS, and TCP traffic will be displayed below.
 
 ##### Examples: 5.1, 5.2, 5.3
 Example 5.1: pcap contains post-infection unencrypted traffic caused by Formbook malware. Formbook is a messy/noisy type of malware that generate a lot of HTTP GET & POST requests. Any form of Formbook will cause the same patterns in GET & POST requests; note that other Formbooks will have different patterns. <br /> Malware was delivered as an email with an attachment -> attached ZIP archive -> extracted malware. <br /> 
 
-Open pcap > basic web filter > scroll down to see more HTTP requests > this Formbook sample has the first four characters as e8bw > follow TCP stream of any HTTP GET request > minimal information in the HTTP request headers indicate likely malicious activity > new search filter show the HTTP responses to the GET requests > basic + DNS filter > find indicators of some domains that were contacted by Formbook malware that did not resolve.
+Open pcap > basic web filter > scroll down to see more HTTP requests > this Formbook sample has the first four characters as 'e8bw' > follow TCP stream of any HTTP GET request > minimal info in the HTTP request headers likely indicate malicious activity > new search filter show the HTTP responses to the GET requests > basic + DNS filter > find indicators of some domains that were contacted by Formbook malware that did not resolve.
 <p align="center">
 e8bw Formbook pattern for any domain it's going to: <br/>
 <img src="https://i.imgur.com/G2mf1Ww.png" height="40%" width="40%" alt="Wireshark Workshop"/>
@@ -423,20 +424,28 @@ e8bw Formbook pattern for any domain it's going to: <br/>
 Follow TCP stream of any initial HTTP GET request: <br/>
 <img src="https://i.imgur.com/PF0Iiht.png" height="55%" width="55%" alt="Wireshark Workshop"/>
 <br />
-Minimal HTTP request headers information is likely malicious activity: <br/>
-<img src="https://i.imgur.com/WODp8DV.png" height="50%" width="50%" alt="Wireshark Workshop"/> 
+Minimal HTTP request headers info is likely malicious activity: <br/>
+<img src="https://i.imgur.com/WODp8DV.png" height="50%" width="55%" alt="Wireshark Workshop"/> 
 <br />
 Edit basic web query to "(http.request or http.response or tls.handshake.type eq 1) and !(ssdp)" to view HTTP responses: <br/>
-<img src="https://i.imgur.com/RBjlyk0.png" height="60%" width="60%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/RBjlyk0.png" height="60%" width="70%" alt="Wireshark Workshop"/>
 <br />
 Follow TCP stream of a GET request that has a 200 OK response: <br/>
-<img src="https://i.imgur.com/eZrXYIb.png" height="60%" width="60%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/eZrXYIb.png" height="60%" width="65%" alt="Wireshark Workshop"/>
 <br />
 Similar minimal HTTP request headers: <br/>
-<img src="https://i.imgur.com/ddeP0xG.png" height="80%" width="80%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/ddeP0xG.png" height="80%" width="85%" alt="Wireshark Workshop"/>
 <br />
 Basic+ web + DNS filter & scroll around > notice some domains contacted by Formbook but they did not resolve: <br/>
-<img src="https://i.imgur.com/WXS5AW8.png" height="50%" width="50%" alt="Wireshark Workshop"/>
+<img src="https://i.imgur.com/WXS5AW8.png" height="50%" width="55%" alt="Wireshark Workshop"/>
+<br />
+
+Searching Formbook on Mitre Att&ck for more info; software related malware GuLoader ID S0561, & XLoader ID S1207 seem like probable TTPs in example 5.1 with my limited knowledge. <br />
+GuLoader IDs: 
+- T1204.001, User Execution: Malicious Link, GuLoader relied upon users clicking on links to malicious documents.
+- T1204.002, User Execution: Malicious File, GuLoader executable retrieved via embedded macros in malicious Word documents.
+
+XLoader T1566.001, Phishing: Spearphishing Attachment, XLoader delivered as a phishing attachment, including PDFs with embedded links, Word and Excel files, and various archive files (ZIP, RAR, ACE, and ISOs) containing EXE payloads.
 <br />
 <br />
 
